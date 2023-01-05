@@ -6,154 +6,112 @@
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:15:53 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/03 23:25:09 by sangkkim         ###   ########seoul.kr  */
+/*   Updated: 2023/01/05 15:49:27 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include "scene.h"
 #include "error.h"
+#include "libft.h"
 
 // parse_scene.c
-int	parse_ambient_light(t_scene *scene, char **infos);
-int	parse_camera(t_scene *scene, char **infos);
-int	parse_light(t_scene *scene, char **infos);
+int	parse_ambient_light(\
+	t_scene *scene, char *line, char *filename, size_t line_number);
+int	parse_camera(\
+	t_scene *scene, char *line, char *filename, size_t line_number);
+int	parse_light(\
+	t_scene *scene, char *line, char *filename, size_t line_number);
 
 // parse_object.c
-int	parse_sphere(t_scene *scene, char **infos);
-int	parse_plane(t_scene *scene, char **infos);
-int	parse_cylinder(t_scene *scene, char **infos);
+int	parse_sphere(\
+	t_scene *scene, char *line, char *filename, size_t line_number);
+int	parse_plane(\
+	t_scene *scene, char *line, char *filename, size_t line_number);
+int	parse_cylinder(\
+	t_scene *scene, char *line, char *filename, size_t line_number);
 
 // init_scene.c [here]
-int	is_valid_argument(int argc, char *argv[]);
-int	parse_line(t_scene *scene, char **infos);
-char	**ft_split(const char *str);
-
-#include <string.h>
-#include <stdio.h>
+int	open_file(int *fd_ptr, int argc, char *argv[]);
+int	parse_line(t_scene *scene, char *line, char *filename, size_t line_number);
 
 int	get_next_line(char **line_ptr, int fd);
 
-#include <string.h>
 int	init_scene(t_scene *scene, int argc, char *argv[])
 {
 	int			err;
 	int			fd;
 	char		*line;
-	char		**infos;
-	int			line_number;
+	size_t		line_number;
 
-	if (!is_valid_argument(argc, argv))
-		return (INVALID_ARGUMENT);
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-		return (FILE_ERROR);
-	memset(scene, 0, sizeof(t_scene));
-	err = 0;
-	line_number = 1;
+	ft_memset(scene, 0, sizeof(t_scene));
+	err = open_file(&fd, argc, argv);
+	line_number = 0;
 	while (err == 0)
 	{
-		err = get_next_line(&line, fd);
-		if (err != 0 || line == NULL)
-			break ;
-		printf(">>%s", line);
-		infos = ft_split(line);
-		if (infos != NULL)
-			err = parse_line(scene, infos);
-		free(line);
-		if (infos != NULL)
-		{
-			for (int i=0; infos[i] != NULL; i++)
-				free(infos[i]);
-			free(infos);
-		}
-		//free_array(infos);
+		err = ft_getline(&line, fd);
+		if (err == 1) // EOF
+			return (0);
 		line_number++;
+		if (err == 0)
+			err = parse_line(scene, line, argv[1], line_number);
+		free(line);
 	}
-	if (err != INVALID_FILE)
-		printf("Error\n%s: %d: invalid format\n", argv[1], line_number); // TODO
 	return (err);
 }
 
-int	is_valid_argument(int argc, char *argv[])
+int	open_file(int *fd_ptr, int argc, char *argv[])
 {
 	char	*extension;
 
 	if (argc != 2)
-		return (0);
-	extension = strrchr(argv[1], '.'); // TODO
-	if (extension == NULL)
-		return (0);
-	if (strcmp(extension, ".rt") != 0) // TODO
-		return (0);
-	return (1);
-}
-
-#include <stdio.h>
-int	parse_line(t_scene *scene, char **infos)
-{
-	int			err;
-
-	printf(">%s\n", infos[0]);
-	if (strcmp(infos[0], "A") == 0) // TODO
-		err = parse_ambient_light(scene, infos);
-	else if (strcmp(infos[0], "C") == 0) // TODO
-		err = parse_camera(scene, infos);
-	else if (strcmp(infos[0], "L") == 0) // TODO
-		err = parse_light(scene, infos);
-	else if (strcmp(infos[0], "sp") == 0) // TODO
-		err = parse_sphere(scene, infos);
-	else if (strcmp(infos[0], "pl") == 0) // TODO
-		err = parse_plane(scene, infos);
-	else if (strcmp(infos[0], "cy") == 0) // TODO
-		err = parse_cylinder(scene, infos);
-	else
-		err = INVALID_FILE;
-	return (err);
-}
-
-#include <ctype.h>
-char	**ft_split(const char *str)
-{
-	char	**words;
-	size_t	count;
-
-	count = 1 - isspace(str[0]);
-	for (size_t i = 1; i < strlen(str); i++)
 	{
-		if (isspace(str[i]) && !isspace(str[i]))
-			count++;
+		printf("Error\ninvalid argument\n");
+		return (INVALID_ARGUMENT);
 	}
-	words = calloc(count + 1, sizeof(char *));
-	if (words == NULL)
-		return (NULL);
+	extension = ft_strrchr(argv[1], '.');
+	if (extension == NULL || ft_strcmp(extension, ".rt") != 0)
+	{
+		printf("Error\n%s: invalid filename\n", argv[1]);
+		return (INVALID_ARGUMENT);
+	}
+	*fd_ptr = open(argv[1], O_RDONLY);
+	if (*fd_ptr == -1)
+	{
+		printf("Error\n%s: file doesn't exist\n", argv[1]);
+		return (INVALID_ARGUMENT);
+	}
+	return (0);
+}
 
-	size_t	idx;
-	size_t	len;
+int	parse_line(t_scene *scene, char *line, char *filename, size_t line_number)
+{
+	size_t		idx;
 
-	count++;
 	idx = 0;
-	while (str[idx])
+	while (line[idx] == ' ')
+		idx++;
+	if (line[idx] == '\0')
+		return (0);
+	else if (ft_strncmp(line[idx], "A ", 2) == 0)
+		return (parse_ambient_light(scene, line, filename, line_number));
+	else if (ft_strncmp(line[idx], "C ", 2) == 0)
+		return (parse_camera(scene, line, filename, line_number));
+	else if (ft_strncmp(line[idx], "L ", 2) == 0)
+		return (parse_light(scene, line, filename, line_number));
+	else if (ft_strncmp(line[idx], "sp ", 3) == 0)
+		return (parse_sphere(scene, line, filename, line_number));
+	else if (ft_strncmp(line[idx], "pl ", 3) == 0)
+		return (parse_plane(scene, line, filename, line_number));
+	else if (ft_strncmp(line[idx], "cy ", 3) == 0)
+		return (parse_cylinder(scene, line, filename, line_number));
+	else
 	{
-		while (isspace(str[idx]))
-			idx++;
-		if (str[idx] == '\0')
-			break ;
-		len = 0;
-		while (str[idx + len] != '\0' && !isspace(str[idx + len]))
-			len++;
-		words[count] = strndup(str + idx, len);
-		if (words[count] == NULL)
-		{
-			count = 0;
-			while (words[count] == NULL)
-				free(words[count++]);
-			free(words);
-			return (NULL);
-		}
-		idx += len;
+		printf("Error\n%s:%zu:%zu: invalid specifier", \
+			filename, line_number, idx);
+		return (INVALID_FILE);
 	}
-	return (words);
 }

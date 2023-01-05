@@ -6,7 +6,7 @@
 #    By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/02 18:03:53 by sangkkim          #+#    #+#              #
-#    Updated: 2023/01/03 23:38:11 by sangkkim         ###   ########seoul.kr   #
+#    Updated: 2023/01/04 19:33:58 by sangkkim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,19 @@ DEPS := $(SRCS:.c=.d)
 INC_DIR := ./headers
 SRC_DIR := ./sources
 
+LIBFT_DIR := libft
+LIBFT := ft
+
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-CPPFLAGS := -I $(INC_DIR) -MMD
+CPPFLAGS := -I $(INC_DIR) -I $(LIBFT_DIR) -MMD
 
-LDFLAGS := #-Ldasd
+LDFLAGS := -L $(LIBFT_DIR) -l $(LIBFT)
 
 #RM : rm -f
 
 $(NAME) : $(addprefix $(SRC_DIR)/, $(OBJS))
+	make -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 # %.o : %.c

@@ -6,7 +6,7 @@
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 17:09:57 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/03 16:56:40 by sangkkim         ###   ########seoul.kr  */
+/*   Updated: 2023/01/05 14:59:45 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 #include "color.h"
 #include "object.h"
 #include "error.h"
+#include "libft.h"
 
+#include <stdio.h>
 int	info_length(char **infos)
 {
 	int	len;
@@ -23,6 +25,7 @@ int	info_length(char **infos)
 	len = 0;
 	while (infos[len] != NULL)
 		len++;
+	printf("info len : %d\n", (int)len);
 	return (len);
 }
 
@@ -34,11 +37,8 @@ int	parse_double_clamp(double *ptr, char *str, double min, double max)
 	value = strtod(str, &str); // TODO
 	if (*str != '\0')
 		return (INVALID_FILE);
-	if (min != max)
-	{
-		if (value < min || max < value)
-			return (INVALID_FILE);
-	}
+	if (value < min || max < value)
+		return (INVALID_FILE);
 	*ptr = value;
 	return (0);
 }
@@ -50,14 +50,17 @@ int	parse_point(t_point3 *ptr, char *str)
 	value = strtod(str, &str); // TODO
 	if (*str != ',')
 		return (INVALID_FILE);
+	printf("double : %f\n", value);
 	ptr->x = value;
 	value = strtod(str, &str); // TODO
 	if (*str != ',')
 		return (INVALID_FILE);
+	printf("double : %f\n", value);
 	ptr->y = value;
 	value = strtod(str, &str); // TODO
 	if (*str != '\0')
 		return (INVALID_FILE);
+	printf("double : %f\n", value);
 	ptr->z = value;
 	return (0);
 }
@@ -65,17 +68,19 @@ int	parse_point(t_point3 *ptr, char *str)
 int	parse_color(t_color *ptr, char *str)
 {
 	long		value;
+	char		*s_ptr;
 
-	value = strtol(str, &str, 10); // TODO
-	if (*str != ',' || value < 0 || value > 255)
+	s_ptr = str;
+	value = ft_strtol(str, &str, 10);
+	if (*(str) != ',' || value < 0 || value > 255)
 		return (INVALID_FILE);
 	ptr->r = (unsigned char)value;
-	value = strtol(str, &str, 10); // TODO
+	value = ft_strtol(++str, &str, 10);
 	if (*str != ',' || value < 0 || value > 255)
 		return (INVALID_FILE);
 	ptr->g = (unsigned char)value;
-	value = strtol(str, &str, 10); // TODO
-	if (*str != '\0' || value < 0 || value > 255)
+	value = ft_strtol(++str, &str, 10);
+	if ((*str != '\0' && *str != '\n') || value < 0 || value > 255)
 		return (INVALID_FILE);
 	ptr->b = (unsigned char)value;
 	return (0);
