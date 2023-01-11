@@ -6,7 +6,7 @@
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:52:56 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/02 16:01:05 by sangkkim         ###   ########seoul.kr  */
+/*   Updated: 2023/01/12 00:02:51 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ struct s_ambient_light
 
 struct s_camera
 {
-	t_point3	position;
-	t_point3	orientation;
+	t_point		position;
+	t_point		orientation;
 	double		fov;
 };
 
 struct s_light
 {
-	t_point3	position;
+	t_point		position;
 	double		brightness;
 	t_color		color;
 };

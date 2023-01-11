@@ -6,7 +6,7 @@
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 01:30:50 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/02 18:50:16 by sangkkim         ###   ########seoul.kr  */
+/*   Updated: 2023/01/12 00:02:41 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,22 @@ typedef struct s_cylinder		t_cylinder;
 
 struct s_sphere
 {
-	t_point3					position;
+	t_point						position;
 	double						diameter;
 	t_color						color;
 };
 
 struct s_plane
 {
-	t_point3					position;
-	t_point3					orientation;
+	t_point						position;
+	t_point						orientation;
 	t_color						color;
 };
 
 struct s_cylinder
 {
-	t_point3					position;
-	t_point3					orientation;
+	t_point						position;
+	t_point						orientation;
 	double						diameter;
 	double						height;
 	t_color						color;
