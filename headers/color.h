@@ -1,17 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   color.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 15:03:20 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/12 01:00:23 by sangkkim         ###   ########seoul.kr  */
+/*   Created: 2022/12/22 01:46:57 by sangkkim          #+#    #+#             */
+/*   Updated: 2023/01/12 01:02:49 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(int c)
+#ifndef COLOR_H
+# define COLOR_H
+
+typedef union u_color		t_color;
+
+union u_color
 {
-	return (c == '\t' || c == '\n' || c == '\v' \
-		|| c == '\f' || c == '\r' || c == ' ');
-}
+	int			raw;
+	struct
+	{
+		unsigned char	r;
+		unsigned char	g;
+		unsigned char	b;
+		unsigned char	a;
+	};
+};
+
+#endif//COLOR_H

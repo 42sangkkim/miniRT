@@ -1,17 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 15:03:20 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/12 01:00:23 by sangkkim         ###   ########seoul.kr  */
+/*   Created: 2023/01/02 15:08:05 by sangkkim          #+#    #+#             */
+/*   Updated: 2023/01/12 01:04:06 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(int c)
+#include "scene.h"
+
+int	init_scene(t_scene *scene, int argc, char *argv[]);
+
+int	main(int argc, char *argv[])
 {
-	return (c == '\t' || c == '\n' || c == '\v' \
-		|| c == '\f' || c == '\r' || c == ' ');
+	int			err;
+	t_scene		scene;
+	// t_graphic	graphic;
+
+	err = init_scene(&scene, argc, argv);
+	// if (err == 0)
+	// 	err = init_graphic(&graphic, &scene);
+	// if (err == 0)
+	// 	err = mlx_loop(graphic.mlx_ptr);
+	return (err);
 }

@@ -1,17 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   point.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/05 15:03:20 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/12 01:00:23 by sangkkim         ###   ########seoul.kr  */
+/*   Created: 2022/12/22 01:45:22 by sangkkim          #+#    #+#             */
+/*   Updated: 2023/01/12 01:04:26 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(int c)
+#ifndef POINT_H
+# define POINT_H
+
+typedef struct s_point			t_point;
+
+struct s_point
 {
-	return (c == '\t' || c == '\n' || c == '\v' \
-		|| c == '\f' || c == '\r' || c == ' ');
-}
+	double			x;
+	double			y;
+	double			z;
+};
+
+#endif//POINT_H
