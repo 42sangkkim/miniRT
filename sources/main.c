@@ -6,36 +6,33 @@
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:08:05 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/12 10:53:20 by sangkkim         ###   ########seoul.kr  */
+/*   Updated: 2023/01/12 20:28:41 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <mlx.h>
 #include "libft.h"
-#include "scene.h"
-#include "graphics.h"
+#include "mini_rt.h"
 #include "error.h"
 
 int			init_scene(t_scene *scene, int argc, char *argv[]);
-int			init_mlx(t_graphics *graphics, t_scene *scene);
+int			init_mlx(t_mini_rt *mini_rt);
 
 static void	print_error(int err);
 
 int	main(int argc, char *argv[])
 {
-	int			err;
-	t_scene		scene;
-	t_graphics	graphics;
+	int				err;
+	t_mini_rt		mini_rt;
 
-	ft_bzero(&scene, sizeof(t_scene));
-	ft_bzero(&graphics, sizeof(t_graphics));
-	err = init_scene(&scene, argc, argv);
+	ft_bzero(&mini_rt, sizeof(t_mini_rt));
+	err = init_scene(&mini_rt.scene, argc, argv);
 	if (err == 0)
-		err = init_mlx(&graphics, &scene);
+		err = init_mlx(&mini_rt);
 	if (err != 0)
 		return (print_error(err), err);
-	mlx_loop(graphics.mlx_ptr);
+	mlx_loop(mini_rt.mlx_ptr);
 }
 
 static void	print_error(int err)

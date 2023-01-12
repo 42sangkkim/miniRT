@@ -6,7 +6,7 @@
 #    By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/02 18:03:53 by sangkkim          #+#    #+#              #
-#    Updated: 2023/01/12 10:53:07 by sangkkim         ###   ########seoul.kr   #
+#    Updated: 2023/01/12 22:01:55 by sangkkim         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ LDFLAGS := $(LIBFT_FLAG) $(MLX_FLAG)
 $(NAME) : $(addprefix $(SRC_DIR)/, $(OBJS))
 	make -C $(LIBFT_DIR)
 	make -C $(MLX_DIR)
+	cp $(MLX_DIR)/libmlx.dylib ./
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 # %.o : %.c

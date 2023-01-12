@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.h                                            :+:      :+:    :+:   */
+/*   mini_rt.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 01:46:57 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/12 21:16:18 by sangkkim         ###   ########seoul.kr  */
+/*   Created: 2023/01/12 20:22:48 by sangkkim          #+#    #+#             */
+/*   Updated: 2023/01/12 22:00:16 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOR_H
-# define COLOR_H
+#ifndef MINI_RT_H
+# define MINI_RT_H
 
-typedef union u_color		t_color;
+# define SCREEN_WIDTH				1920
+# define SCREEN_HEIGHT				1080
+# define SCREEN_TITLE				"miniRT"
 
-union u_color
+# include "scene.h"
+# include "image.h"
+
+typedef struct s_mini_rt			t_mini_rt;
+
+struct s_mini_rt
 {
-	int			raw;
-	struct
-	{
-		unsigned char	b;
-		unsigned char	g;
-		unsigned char	r;
-		unsigned char	a;
-	};
+	void							*mlx_ptr;
+	void							*win_ptr;
+	t_scene							scene;
+	t_image							image;
 };
 
-#endif//COLOR_H
+
+#endif//MINI_RT_H
