@@ -6,7 +6,7 @@
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 00:34:24 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/12 02:38:03 by sangkkim         ###   ########seoul.kr  */
+/*   Updated: 2023/01/12 02:53:57 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	init_scene(t_scene *scene, int argc, char *argv[])
 
 	if (argc != 2 || !valid_extension(argv[1]))
 		return (INVALID_ARGUMENT);
-	ft_bzero(scene, sizeof(t_scene));
 	err = parse_rt_file(scene, argv[1]);
 	if (err == 0)
 		err = check_scene_validity(scene);

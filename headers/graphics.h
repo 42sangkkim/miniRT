@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sangkkim <sangkkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/02 17:50:06 by sangkkim          #+#    #+#             */
-/*   Updated: 2023/01/12 03:06:14 by sangkkim         ###   ########seoul.kr  */
+/*   Created: 2023/01/12 02:43:41 by sangkkim          #+#    #+#             */
+/*   Updated: 2023/01/12 03:04:24 by sangkkim         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#ifndef GRAPHICS_H
+# define GRAPHICS_H
 
-# define INVALID_ARGUMENT				1
-# define FILE_OPEN_ERROR				2
-# define FILE_READ_ERROR				3
-# define FILE_FORMAT_ERROR				4
-# define MALLOC_ERROR					5
-# define MLX_ERROR						6
+# define SCREEN_WIDTH				1920
+# define SCREEN_HEIGHT				1080
+# define SCREEN_TITLE				"miniRT"
 
-#endif//ERROR_H
+# include "color.h"
+
+typedef struct s_graphics			t_graphics;
+
+struct s_graphics
+{
+	void							*mlx_ptr;
+	void							*win_ptr;
+	int								width;
+	int								height;
+	void							*img_ptr;
+};
+
+#endif//GRAPHICS_H
